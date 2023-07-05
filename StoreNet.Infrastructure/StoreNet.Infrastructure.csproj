@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="data\StoreNet.Database.sql\**" />
+    <EmbeddedResource Remove="data\StoreNet.Database.sql\**" />
+    <None Remove="data\StoreNet.Database.sql\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StoreNet.Domain\StoreNet.Domain.csproj" />
+    <ProjectReference Include="..\StoreNet.Service\StoreNet.Service.csproj" />
+  </ItemGroup>
+
+</Project>
