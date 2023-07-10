@@ -1,0 +1,49 @@
+<div>
+  <div class="submit-form mt-5">
+    <div *ngIf="!submitted">
+      <div class="form-group">
+        <label for="barcode">Código de barras</label>
+        <input type="text"
+               class="form-control"
+               id="barcode"
+               required
+               [(ngModel)]="product.barcode"
+               name="barcode" />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <input class="form-control"
+               id="description"
+               required
+               [(ngModel)]="product.description"
+               name="description" />
+      </div>
+
+      <div class="form-group">
+        <label for="price">Precio</label>
+        <input class="form-control"
+               id="price"
+               required
+               [(ngModel)]="product.price"
+               name="price" />
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input class="form-control"
+               id="stock"
+               required
+               [(ngModel)]="product.stock"
+               name="stock" />
+      </div>
+
+      <button (click)="saveProduct()" class="btn btn-success mt-5">Guardar</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>El producto fue agregado con éxito!</h4>
+      <button class="btn btn-success" (click)="newProduct()">Agregar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div>
+  <div class="submit-form mt-5">
+    <div *ngIf="!submitted">
+      <div class="form-group">
+        <label for="branch">Nombre de la tienda</label>
+        <input type="text"
+               class="form-control"
+               id="branch"
+               required
+               [(ngModel)]="store.branch"
+               name="branch" />
+      </div>
+
+      <div class="form-group">
+        <label for="address">Dirección</label>
+        <input class="form-control"
+               id="address"
+               required
+               [(ngModel)]="store.address"
+               name="address" />
+      </div>
+
+      <button (click)="saveStore()" class="btn btn-success mt-5">Guardar</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>El storeo fue agregado con éxito!</h4>
+      <button class="btn btn-success" (click)="newStore()">Agregar</button>
+    </div>
+  </div>
+</div>

@@ -13,7 +13,7 @@ namespace StoreNet.Infrastructure
     {
         public DbContext DbContext { get; private set; }
         private Dictionary<string, object> Repositories { get; }
-        private IDbContextTransaction _transaction;
+        private IDbContextTransaction? _transaction;
         private readonly IsolationLevel? _isolationLevel;
 
         public UnitOfWork(DbFactory dbFactory)

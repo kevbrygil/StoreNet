@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StoreNet.Domain\StoreNet.Domain.csproj" />
+    <ProjectReference Include="..\StoreNet.Infrastructure\StoreNet.Infrastructure.csproj" />
+    <ProjectReference Include="..\StoreNet.Service\StoreNet.Service.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -33,8 +33,8 @@ namespace StoreNet.Service
 
                 var customerRepos = _unitOfWork.Repository<Customer>();
                 var customer = await customerRepos.FindAsync(customerInput.Id) ?? throw new KeyNotFoundException();
-                customer.Name = customer.Name;
-                customer.Lastname = customer.Lastname;
+                customer.Name = customerInput.Name;
+                customer.Lastname = customerInput.Lastname;
                 customer.Address = customerInput.Address;
 
                 await _unitOfWork.CommitTransaction();

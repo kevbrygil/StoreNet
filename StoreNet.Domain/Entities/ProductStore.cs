@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace StoreNet.Domain.Entities;
+﻿namespace StoreNet.Domain.Entities;
 
 public partial class ProductStore : BaseAuditableEntity<int>
 {

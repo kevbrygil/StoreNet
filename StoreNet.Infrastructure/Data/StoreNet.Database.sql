@@ -78,7 +78,7 @@ ALTER DATABASE [StoreNet] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_
 GO
 USE [StoreNet]
 GO
-/****** Object:  Table [dbo].[Customers] ******/
+/****** Object:  Table [dbo].[Customers]    Script Date: 7/10/2023 1:48:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Products] ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 7/10/2023 1:48:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -112,7 +112,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ProductStore] ******/
+/****** Object:  Table [dbo].[ProductStore]    Script Date: 7/10/2023 1:48:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,10 +122,14 @@ CREATE TABLE [dbo].[ProductStore](
 	[ProductId] [int] NOT NULL,
 	[StoreId] [int] NOT NULL,
 	[CreatedDate] [datetime] NULL,
-	[UpdatedDate] [datetime] NULL
+	[UpdatedDate] [datetime] NULL,
+ CONSTRAINT [PK_ProductStore] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sales] ******/
+/****** Object:  Table [dbo].[Sales]    Script Date: 7/10/2023 1:48:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,11 +138,18 @@ CREATE TABLE [dbo].[Sales](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[CustomerId] [int] NOT NULL,
 	[ProductId] [int] NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[UnitPrice] [decimal](19, 4) NOT NULL,
+	[Total] [decimal](19, 4) NOT NULL,
 	[CreatedDate] [datetime] NULL,
-	[UpdatedDate] [datetime] NULL
+	[UpdatedDate] [datetime] NULL,
+ CONSTRAINT [Sales_PK] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Stores] ******/
+/****** Object:  Table [dbo].[Stores]    Script Date: 7/10/2023 1:48:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -152,6 +163,51 @@ PRIMARY KEY CLUSTERED
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Customers] ON 
+
+INSERT [dbo].[Customers] ([Id], [Name], [Lastname], [Address]) VALUES (1, N'Gilbert', N'Tamayo', N'Aqui cerca de una escuela')
+INSERT [dbo].[Customers] ([Id], [Name], [Lastname], [Address]) VALUES (3, N'Juan', N'Perez', N'Cerca de un super mercado')
+SET IDENTITY_INSERT [dbo].[Customers] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Products] ON 
+
+INSERT [dbo].[Products] ([Id], [Barcode], [Description], [Image], [Price], [Stock]) VALUES (1, N'123456789', N'Coca-Cola', NULL, CAST(30.0000 AS Decimal(19, 4)), 599)
+INSERT [dbo].[Products] ([Id], [Barcode], [Description], [Image], [Price], [Stock]) VALUES (2, N'494949848', N'Chetos', NULL, CAST(15.0000 AS Decimal(19, 4)), 800)
+INSERT [dbo].[Products] ([Id], [Barcode], [Description], [Image], [Price], [Stock]) VALUES (3, N'1165645498', N'Helado', NULL, CAST(20.0000 AS Decimal(19, 4)), 50)
+INSERT [dbo].[Products] ([Id], [Barcode], [Description], [Image], [Price], [Stock]) VALUES (4, N'159498494', N'Kilo de Manzana', NULL, CAST(60.0000 AS Decimal(19, 4)), 798)
+SET IDENTITY_INSERT [dbo].[Products] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ProductStore] ON 
+
+INSERT [dbo].[ProductStore] ([Id], [ProductId], [StoreId], [CreatedDate], [UpdatedDate]) VALUES (1, 3, 1, CAST(N'2023-07-07T00:00:00.000' AS DateTime), CAST(N'2023-07-10T14:11:55.617' AS DateTime))
+INSERT [dbo].[ProductStore] ([Id], [ProductId], [StoreId], [CreatedDate], [UpdatedDate]) VALUES (2, 2, 5, CAST(N'2023-07-10T19:22:05.063' AS DateTime), CAST(N'2023-07-10T19:27:52.153' AS DateTime))
+SET IDENTITY_INSERT [dbo].[ProductStore] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Sales] ON 
+
+INSERT [dbo].[Sales] ([Id], [CustomerId], [ProductId], [Quantity], [UnitPrice], [Total], [CreatedDate], [UpdatedDate]) VALUES (5, 1, 1, 100, CAST(10.1000 AS Decimal(19, 4)), CAST(1010.0000 AS Decimal(19, 4)), CAST(N'2023-07-06T18:47:51.600' AS DateTime), NULL)
+INSERT [dbo].[Sales] ([Id], [CustomerId], [ProductId], [Quantity], [UnitPrice], [Total], [CreatedDate], [UpdatedDate]) VALUES (7, 1, 1, 100, CAST(30.0000 AS Decimal(19, 4)), CAST(3000.0000 AS Decimal(19, 4)), CAST(N'2023-07-08T18:34:11.430' AS DateTime), NULL)
+INSERT [dbo].[Sales] ([Id], [CustomerId], [ProductId], [Quantity], [UnitPrice], [Total], [CreatedDate], [UpdatedDate]) VALUES (9, 1, 4, 2, CAST(60.0000 AS Decimal(19, 4)), CAST(120.0000 AS Decimal(19, 4)), CAST(N'2023-07-10T14:34:43.127' AS DateTime), NULL)
+SET IDENTITY_INSERT [dbo].[Sales] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Stores] ON 
+
+INSERT [dbo].[Stores] ([Id], [Branch], [Address]) VALUES (1, N'Tienda de la esquina', N'Local de la esquina')
+INSERT [dbo].[Stores] ([Id], [Branch], [Address]) VALUES (2, N'Tienda de cozumel', N'Malecón')
+INSERT [dbo].[Stores] ([Id], [Branch], [Address]) VALUES (3, N'Tienda matriz', N'Paseo montejo')
+INSERT [dbo].[Stores] ([Id], [Branch], [Address]) VALUES (4, N'El amigo Juan', N'Con el Juan')
+INSERT [dbo].[Stores] ([Id], [Branch], [Address]) VALUES (5, N'El amigo Luis', N'Con el Luis')
+INSERT [dbo].[Stores] ([Id], [Branch], [Address]) VALUES (7, N'Tienda de la esquina', N'En la esquina')
+SET IDENTITY_INSERT [dbo].[Stores] OFF
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UQ__Products__177800D32ED31F33]    Script Date: 7/10/2023 1:48:02 PM ******/
+ALTER TABLE [dbo].[Products] ADD UNIQUE NONCLUSTERED 
+(
+	[Barcode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Products] ADD  DEFAULT ((0.00)) FOR [Price]
 GO

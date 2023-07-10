@@ -1,0 +1,36 @@
+<div class="list row">
+  <div class="col-md-8">
+    <div class="input-group mb-3">
+      <input type="text"
+             class="form-control"
+             placeholder="Buscar por Id"
+             [(ngModel)]="idSearch" />
+      <div class="input-group-append ms-2">
+        <button class="btn btn-outline-secondary"
+                type="button"
+                (click)="searchById()">
+          Buscar
+        </button>
+        <button class="btn btn-outline-secondary ms-2"
+                type="button"
+                (click)="clearSearch()">
+          Limpiar busqueda
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h4>Lista de ventas</h4>
+    <ul class="list-group">
+      <li class="list-group-item"
+          *ngFor="let sale of sales; let i = index"
+          [class.active]="i == currentIndex"
+          (click)="setActiveSale(sale, i)">
+        {{ sale.id }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <app-sale-details [viewMode]="true  " [currentSale]="currentSale"></app-sale-details>
+  </div>
+</div>

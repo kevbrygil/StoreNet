@@ -1,0 +1,36 @@
+<div class="list row">
+  <div class="col-md-8">
+    <div class="input-group mb-3">
+      <input type="text"
+             class="form-control"
+             placeholder="Buscar por Id"
+             [(ngModel)]="idSearch" />
+      <div class="input-group-append ms-2">
+        <button class="btn btn-outline-secondary"
+                type="button"
+                (click)="searchById()">
+          Buscar
+        </button>
+        <button class="btn btn-outline-secondary ms-2"
+                type="button"
+                (click)="clearSearch()">
+          Limpiar busqueda
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h4>Lista de clientes</h4>
+    <ul class="list-group">
+      <li class="list-group-item"
+          *ngFor="let customer of customers; let i = index"
+          [class.active]="i == currentIndex"
+          (click)="setActiveCustomer(customer, i)">
+        {{ customer.id }} - {{ customer.name }} {{ customer.lastname }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <app-customer-details [viewMode]="true" [currentCustomer]="currentCustomer"></app-customer-details>
+  </div>
+</div>

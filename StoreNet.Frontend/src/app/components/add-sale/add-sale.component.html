@@ -1,0 +1,37 @@
+<div>
+  <div class="submit-form mt-5">
+    <div *ngIf="!submitted">
+
+      <select class="form-select form-select-lg mb-3" required name="customerId" [(ngModel)]="sale.customerId">
+        <option value="0">Seleccione el cliente</option>
+        <option [value]="customer.id" *ngFor="let customer of customers">
+          {{customer.name}} {{customer.lastname}}
+        </option>
+      </select>
+
+      <select class="form-select form-select-lg mb-3" required name="productId" [(ngModel)]="sale.productId">
+        <option value="0">Seleccione el producto</option>
+        <option [value]="product.id" *ngFor="let product of products">
+          {{product.id}} {{product.description}}
+        </option>
+      </select>
+
+      <div class="form-group">
+        <label for="quantiry">Cantidad a comprar</label>
+        <input class="form-control"
+               id="quantity"
+               type="number"
+               required
+               [(ngModel)]="sale.quantity"
+               name="quantity" />
+      </div>
+
+      <button (click)="saveSale()" class="btn btn-success mt-5">Guardar</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>La venta fue realizado con éxito!</h4>
+      <button class="btn btn-success" (click)="newSale()">Agregar</button>
+    </div>
+  </div>
+</div>

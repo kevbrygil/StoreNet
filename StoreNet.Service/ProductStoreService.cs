@@ -33,12 +33,12 @@ namespace StoreNet.Service
 
                 var productStoreRepos = _unitOfWork.Repository<ProductStore>();
                 var productStore = await productStoreRepos.FindAsync(productStoreInput.Id) ?? throw new KeyNotFoundException();
-                productStore.Product = productStore.Product;
-                productStore.Store= productStore.Store;
+                productStore.ProductId = productStoreInput.ProductId;
+                productStore.StoreId = productStoreInput.StoreId;
 
                 await _unitOfWork.CommitTransaction();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 await _unitOfWork.RollbackTransaction();
                 throw;
