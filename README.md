@@ -20,6 +20,10 @@ Tambien basta destacar que el proyecto esta desarrollado en base a los siguiente
 - Unit of Work: Nos permite manejar todas las transacciones en la manipulación de los datos con la ayuda del pattern repository.
 - DTO (Data Transfer Object): Contiene bondades que nos permite crear objectos con solamente propiedades necesarias en la cual funcione de capa intermedia entre las entidades de dominio y nuestro cliente API.
 
+En cuestión de la data se aplicó el enfoque Database First, en la cual la base de datos se estructura en base al siguiente diagrama de ER:
+
+<img src="./public/diagrama_er.png" width="300">
+
 ### Principales Librerias y Framewoks Usados.
 
 ## Frontend
