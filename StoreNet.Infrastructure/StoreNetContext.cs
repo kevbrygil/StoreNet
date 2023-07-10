@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using StoreNet.Domain.Entities;
 
 namespace StoreNet.Infrastructure
@@ -14,20 +13,19 @@ namespace StoreNet.Infrastructure
         public StoreNetContext(DbContextOptions<StoreNetContext> options)
             : base(options)
         {
+            ChangeTracker.Tracked += OnEntityTracked;
+            ChangeTracker.StateChanged += OnEntityStateChanged;
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
 
         public virtual DbSet<Product> Products { get; set; }
 
+        public virtual DbSet<Store> Stores { get; set; }
+
         public virtual DbSet<ProductStore> ProductStores { get; set; }
 
         public virtual DbSet<Sale> Sales { get; set; }
-
-        public virtual DbSet<Store> Stores { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer("Data Source=localhost,14333;Initial Catalog=StoreNet;Persist Security Info=True;User ID=sa;Password=P@ssword;MultipleActiveResultSets=True; Integrated Security=false;TrustServerCertificate=true;");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +48,8 @@ namespace StoreNet.Infrastructure
             {
                 entity.HasKey(e => e.Id).HasName("PK__Products__3214EC0733248663");
 
+                entity.HasIndex(e => e.Barcode, "UQ__Products__177800D32ED31F33").IsUnique();
+
                 entity.Property(e => e.Barcode)
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -61,39 +61,37 @@ namespace StoreNet.Infrastructure
                     .HasColumnType("decimal(19, 4)");
             });
 
-            modelBuilder.Entity<ProductStore>(entity =>
-            {
-                entity
-                    .HasNoKey()
-                    .ToTable("ProductStore");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Product).WithMany()
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.Store).WithMany()
-                    .HasForeignKey(d => d.StoreId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
-
             modelBuilder.Entity<Sale>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id).HasName("Sales_PK");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Total).HasColumnType("decimal(19, 4)");
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(19, 4)");
                 entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
-                entity.HasOne(d => d.Customer).WithMany()
+                entity.HasOne(d => d.Customer).WithMany(p => p.Sales)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
-                entity.HasOne(d => d.Product).WithMany()
+                entity.HasOne(d => d.Product).WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<ProductStore>(entity =>
+            {
+                entity.ToTable("ProductStore");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Product).WithMany(p => p.ProductStores)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Store).WithMany(p => p.ProductStores)
+                    .HasForeignKey(d => d.StoreId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
@@ -113,5 +111,17 @@ namespace StoreNet.Infrastructure
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        void OnEntityTracked(object sender, EntityTrackedEventArgs e)
+        {
+            if (!e.FromQuery && e.Entry.State == EntityState.Added && e.Entry.Entity is BaseAuditableEntity<int> entity)
+                entity.CreatedDate = DateTime.UtcNow;
+        }
+
+        void OnEntityStateChanged(object sender, EntityStateChangedEventArgs e)
+        {
+            if (e.NewState == EntityState.Modified && e.Entry.Entity is BaseAuditableEntity<int> entity)
+                entity.UpdatedDate = DateTime.UtcNow;
+        }
     }
 }

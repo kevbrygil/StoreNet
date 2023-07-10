@@ -1,0 +1,72 @@
+<div *ngIf="viewMode; else editable">
+  <div *ngIf="currentProductstore.id">
+    <h4>Inventario</h4>
+    <div>
+      <label><strong>Id del Inventario:</strong></label> {{ currentProductstore.id }}
+    </div>
+    <div>
+      <label><strong>Id Producto:</strong></label> {{ currentProductstore.productId }}
+    </div>
+    <div>
+      <label><strong>Id Tienda:</strong></label> {{ currentProductstore.storeId }}
+    </div>
+    <div>
+      <label><strong>Creado:</strong></label> {{ currentProductstore.createdDate | date:'short' }}
+    </div>
+    <div>
+      <label><strong>Actualizado:</strong></label> {{ currentProductstore.updatedDate | date:'short' }}
+    </div>
+
+    <a class="badge bg-success mt-2"
+       routerLink="/productsstores/{{ currentProductstore.id }}">
+      Editar
+    </a>
+  </div>
+
+  <div *ngIf="!currentProductstore.id">
+    <br />
+    <p>Por favor seleccione un inventario...</p>
+  </div>
+</div>
+
+<ng-template #editable>
+  <div *ngIf="currentProductstore.id" class="edit-form">
+    <h4>Inventario</h4>
+    <form class="mb-3">
+      <div class="form-group">
+        <label for="productId">Producto</label>
+        <select class="form-select form-select-lg mb-3" required name="productId" [(ngModel)]="currentProductstore.productId">
+          <option value="0">Seleccione el producto</option>
+          <option [value]="product.id" *ngFor="let product of products">
+            {{product.id}} - {{product.description}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="storeId">Tienda</label>
+        <select class="form-select form-select-lg mb-3" required name="storeId" [(ngModel)]="currentProductstore.storeId">
+          <option value="0">Seleccione la sucursal</option>
+          <option [value]="store.id" *ngFor="let store of stores">
+            {{store.id}} - {{store.branch}}
+          </option>
+        </select>
+      </div>
+    </form>
+
+    <button class="badge bg-danger me-2" (click)="deleteProductstore()">
+      Eliminar
+    </button>
+
+    <button type="submit"
+            class="badge bg-success mb-2"
+            (click)="updateProductstore()">
+      Actualizar
+    </button>
+    <p>{{ message }}</p>
+  </div>
+
+  <div *ngIf="!currentProductstore.id">
+    <br />
+    <p>No se puede acceder a este inventario...</p>
+  </div>
+</ng-template>

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using StoreNet.Domain.Entities;
+﻿using StoreNet.Domain.Entities;
 using StoreNet.Domain.Interfaces;
-using System.Threading.Tasks;
 using StoreNet.Domain.Interfaces.Services;
 
 namespace StoreNet.Service
@@ -33,11 +30,11 @@ namespace StoreNet.Service
 
                 var productRepos = _unitOfWork.Repository<Product>();
                 var product = await productRepos.FindAsync(productInput.Id) ?? throw new KeyNotFoundException();
-                product.Barcode = product.Barcode;
-                product.Description = product.Description;
-                product.Image = product.Image;
-                product.Price = product.Price;
-                product.Stock = product.Stock;
+                product.Barcode = productInput.Barcode;
+                product.Description = productInput.Description;
+                product.Image = productInput.Image;
+                product.Price = productInput.Price;
+                product.Stock = productInput.Stock;
 
                 await _unitOfWork.CommitTransaction();
             }

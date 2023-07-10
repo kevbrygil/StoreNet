@@ -1,0 +1,94 @@
+<div *ngIf="viewMode; else editable">
+  <div *ngIf="currentProduct.id">
+    <h4>Producto</h4>
+    <div>
+      <img alt="lata" src="./assets/images/lata.png">
+    </div>
+    <div>
+      <label><strong>Id del Producto:</strong></label> {{ currentProduct.id }}
+    </div>
+    <div>
+      <label><strong>Código de barras:</strong></label> {{ currentProduct.barcode }}
+    </div>
+    <div>
+      <label><strong>Decripción:</strong></label>
+      {{ currentProduct.description }}
+    </div>
+    <div>
+      <label><strong>Precio:</strong></label> {{ currentProduct.price | currency }}
+    </div>
+    <div>
+      <label><strong>Stock:</strong></label> {{ currentProduct.stock }}
+    </div>
+
+    <a class="badge bg-success mt-2"
+       routerLink="/products/{{ currentProduct.id }}">
+      Editar
+    </a>
+  </div>
+
+  <div *ngIf="!currentProduct.id">
+    <br />
+    <p>Por favor seleccione un producto...</p>
+  </div>
+</div>
+
+<ng-template #editable>
+  <div *ngIf="currentProduct.id" class="edit-form">
+    <h4>Product</h4>
+    <form class="mb-3">
+      <div class="form-group">
+        <label for="barcode">Código de barras</label>
+        <input type="text"
+               class="form-control"
+               id="barcode"
+               required
+               [(ngModel)]="currentProduct.barcode"
+               name="barcode" />
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <input type="text"
+               class="form-control"
+               id="description"
+               required
+               [(ngModel)]="currentProduct.description"
+               name="description" />
+      </div>
+      <div class="form-group">
+        <label for="price">Precio</label>
+        <input type="text"
+               class="form-control"
+               id="price"
+               required
+               [(ngModel)]="currentProduct.price"
+               name="price" />
+      </div>
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="text"
+               class="form-control"
+               id="stock"
+               required
+               [(ngModel)]="currentProduct.stock"
+               name="stock" />
+      </div>
+    </form>
+
+    <button class="badge bg-danger me-2" (click)="deleteProduct()">
+      Eliminar
+    </button>
+
+    <button type="submit"
+            class="badge bg-success mb-2"
+            (click)="updateProduct()">
+      Actualizar
+    </button>
+    <p>{{ message }}</p>
+  </div>
+
+  <div *ngIf="!currentProduct.id">
+    <br />
+    <p>No se puede acceder a este producto...</p>
+  </div>
+</ng-template>

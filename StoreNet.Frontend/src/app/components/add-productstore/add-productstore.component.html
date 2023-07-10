@@ -1,0 +1,27 @@
+<div>
+  <div class="submit-form mt-5">
+    <div *ngIf="!submitted">
+
+      <select class="form-select form-select-lg mb-3" required name="productId" [(ngModel)]="productstore.productId">
+        <option value="0">Seleccione el producto</option>
+        <option [value]="product.id" *ngFor="let product of products">
+          {{product.id}} - {{product.description}}
+        </option>
+      </select>
+
+      <select class="form-select form-select-lg mb-3" required name="storeId" [(ngModel)]="productstore.storeId">
+        <option value="0">Seleccione la sucursal</option>
+        <option [value]="store.id" *ngFor="let store of stores">
+          {{store.id}} - {{store.branch}}
+        </option>
+      </select>
+
+      <button (click)="saveProductstore()" class="btn btn-success mt-5">Guardar</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>El inventario fue realizado con éxito!</h4>
+      <button class="btn btn-success" (click)="newProductstore()">Agregar</button>
+    </div>
+  </div>
+</div>

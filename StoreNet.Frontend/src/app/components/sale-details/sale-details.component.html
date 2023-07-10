@@ -1,0 +1,89 @@
+<div *ngIf="viewMode; else editable">
+  <div *ngIf="currentSale.id">
+    <h4>Venta</h4>
+    <div>
+      <label><strong>Producto:</strong></label> {{ currentSale.productId }}
+    </div>
+    <div>
+      <label><strong>Cliente:</strong></label>
+      {{ currentSale.customerId }}
+    </div>
+    <div>
+      <label><strong>Cantidad comprada:</strong></label>
+      {{ currentSale.quantity}}
+    </div>
+    <div>
+      <label><strong>Total:</strong></label>
+      {{ currentSale.total | currency}}
+    </div>
+    <div>
+      <label><strong>Fecha:</strong></label>
+      {{ currentSale.createdDate | date:'short'}}
+    </div>
+
+    <a class="badge bg-warning mt-2"
+       routerLink="/sales/{{ currentSale.id }}">
+      Editar
+    </a>
+  </div>
+
+  <div *ngIf="!currentSale.id">
+    <br />
+    <p>Por favor seleccione una venta...</p>
+  </div>
+</div>
+
+<ng-template #editable>
+  <div *ngIf="currentSale.id" class="edit-form">
+    <h4>Sale</h4>
+    <form class="mb-3">
+      <div class="form-group">
+        <label for="productId">Producto</label>
+        <select disabled class="form-select form-select-lg mb-3" required name="productId" [(ngModel)]="currentSale.productId">
+          <option value="0">Seleccione el producto</option>
+          <option [value]="product.id" *ngFor="let product of products">
+            {{product.id}} {{product.description}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="customerId">Cliente</label>
+        <select disabled class="form-select form-select-lg mb-3" required name="customerId" [(ngModel)]="currentSale.customerId">
+          <option value="0">Seleccione el cliente</option>
+          <option [value]="customer.id" *ngFor="let customer of customers">
+            {{customer.name}} {{customer.lastname}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input disabled type="text"
+               class="form-control"
+               id="quantity"
+               required
+               [(ngModel)]="currentSale.quantity"
+               name="quantity" />
+      </div>
+      <div class="form-group">
+        <label for="total">Total</label>
+        <input disabled type="text"
+               class="form-control"
+               id="total"
+               required
+               [(ngModel)]="currentSale.total"
+               name="total" />
+      </div>
+    </form>
+
+    <button class="badge bg-danger me-2" (click)="deleteSale()">
+      Eliminar
+    </button>
+
+    <p>{{ message }}</p>
+  </div>
+
+  <div *ngIf="!currentSale.id">
+    <br />
+    <p>No se puede acceder a esta venta...</p>
+  </div>
+</ng-template>

@@ -9,9 +9,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreNet.Service", "StoreNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreNet.Infrastructure", "StoreNet.Infrastructure\StoreNet.Infrastructure.csproj", "{7A9547C2-D103-4EF1-888B-D8A82785281E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreNet.API", "SoreNet.API\StoreNet.API.csproj", "{5A8032DB-0AA3-4FA6-8651-D35F9545E26E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreNet.API", "StoreNet.API\StoreNet.API.csproj", "{5A8032DB-0AA3-4FA6-8651-D35F9545E26E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreNet.InfrastructureTests", "StoreNet.InfrastructureTests\StoreNet.InfrastructureTests.csproj", "{C7F2B9F0-0DEA-49C9-B0CB-68A4E1F04EE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreNet.Application", "StoreNet.Application\StoreNet.Application.csproj", "{84E50B6A-E39E-4BC4-9345-F1E91B2A5507}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "StoreNet.Frontend", "StoreNet.Frontend\StoreNet.Frontend.esproj", "{3254FC2D-CC32-4FFE-9D40-6F879B5CA927}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{1FD20377-5D1C-4AD5-B9EA-7A1428AC19F4}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +44,16 @@ Global
 		{5A8032DB-0AA3-4FA6-8651-D35F9545E26E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A8032DB-0AA3-4FA6-8651-D35F9545E26E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A8032DB-0AA3-4FA6-8651-D35F9545E26E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7F2B9F0-0DEA-49C9-B0CB-68A4E1F04EE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7F2B9F0-0DEA-49C9-B0CB-68A4E1F04EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7F2B9F0-0DEA-49C9-B0CB-68A4E1F04EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7F2B9F0-0DEA-49C9-B0CB-68A4E1F04EE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E50B6A-E39E-4BC4-9345-F1E91B2A5507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E50B6A-E39E-4BC4-9345-F1E91B2A5507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E50B6A-E39E-4BC4-9345-F1E91B2A5507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E50B6A-E39E-4BC4-9345-F1E91B2A5507}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3254FC2D-CC32-4FFE-9D40-6F879B5CA927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3254FC2D-CC32-4FFE-9D40-6F879B5CA927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3254FC2D-CC32-4FFE-9D40-6F879B5CA927}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3254FC2D-CC32-4FFE-9D40-6F879B5CA927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3254FC2D-CC32-4FFE-9D40-6F879B5CA927}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3254FC2D-CC32-4FFE-9D40-6F879B5CA927}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
