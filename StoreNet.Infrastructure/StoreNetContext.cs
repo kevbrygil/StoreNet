@@ -27,6 +27,8 @@ namespace StoreNet.Infrastructure
 
         public virtual DbSet<Sale> Sales { get; set; }
 
+        public virtual DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>(entity =>
@@ -105,6 +107,24 @@ namespace StoreNet.Infrastructure
                 entity.Property(e => e.Branch)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+                entity.Property(e => e.Username)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Customer).WithMany(p => p.Users)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Users_Customers");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -5,6 +5,7 @@ using System.Globalization;
 using StoreNet.Application.ProductsStores.Dtos;
 using StoreNet.Service;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StoreNet.API.Controllers
 {
@@ -21,7 +22,7 @@ namespace StoreNet.API.Controllers
             this._mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<ActionResult<IReadOnlyList<ProductStore>>> GetProductsStores()
         {
             var productsStoresDetailsList = await _ProductStoreService.GetAll();
@@ -32,7 +33,7 @@ namespace StoreNet.API.Controllers
 
             return Ok(productsStoresDetailsList);
         }
-        [HttpGet("{productStoreId}")]
+        [HttpGet("{productStoreId}"), Authorize]
         public async Task<ActionResult<ProductStore>> GetProductStoreById(int productStoreId)
         {
             var response = await _ProductStoreService.GetById(productStoreId);
@@ -40,7 +41,7 @@ namespace StoreNet.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost()]
+        [HttpPost(), Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateProductStore(ProductStoreAddDto productStoreToSave)
@@ -56,7 +57,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, productStoreToSave);
         }
 
-        [HttpPut("{ProductStoreId}")]
+        [HttpPut("{ProductStoreId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateProductStore(int productStoreId, ProductStoreUpdateDto productStoreToSave)
@@ -77,7 +78,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, productStoreToSave);
         }
 
-        [HttpDelete("{productStoreId}")]
+        [HttpDelete("{productStoreId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteProductStore(int productStoreId)

@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoreNet.Domain.Entities;
 using StoreNet.Domain.Interfaces.Services;
-using System.Globalization;
+
 
 namespace StoreNet.API.Controllers
 {
@@ -16,7 +17,7 @@ namespace StoreNet.API.Controllers
             this._customerService = customerService;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<ActionResult<IReadOnlyList<Customer>>> GetCustomers()
         {
             var customersDetailsList = await _customerService.GetAll();
@@ -27,7 +28,8 @@ namespace StoreNet.API.Controllers
 
             return Ok(customersDetailsList);
         }
-        [HttpGet("{customerId}")]
+
+        [HttpGet("{customerId}"), Authorize]
         public async Task<ActionResult<Customer>> GetCustomerById(int customerId)
         {
             var response = await _customerService.GetById(customerId);
@@ -35,7 +37,7 @@ namespace StoreNet.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost()]
+        [HttpPost(), Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateCustomer(Customer customerToSave)
@@ -50,7 +52,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, customerToSave);
         }
 
-        [HttpPut("{customerId}")]
+        [HttpPut("{customerId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateCustomer(int customerId, Customer customerToSave)
@@ -70,7 +72,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, customerToSave);
         }
 
-        [HttpDelete("{customerId}")]
+        [HttpDelete("{customerId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteCustomer(int customerId)

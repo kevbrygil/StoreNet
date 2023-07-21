@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoreNet.Domain.Entities;
 using StoreNet.Domain.Interfaces.Services;
 
@@ -15,7 +16,7 @@ namespace StoreNet.API.Controllers
             this._productService = productService;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
         {
             var productsDetailsList = await _productService.GetAll();
@@ -27,7 +28,7 @@ namespace StoreNet.API.Controllers
             return Ok(productsDetailsList);
         }
         
-        [HttpGet("{productId}")]
+        [HttpGet("{productId}"), Authorize]
         public async Task<ActionResult<Product>> GetProductById(int productId)
         {
             var response = await _productService.GetById(productId);
@@ -35,7 +36,7 @@ namespace StoreNet.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost()]
+        [HttpPost(), Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateProduct(Product productToSave)
@@ -50,7 +51,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, productToSave);
         }
 
-        [HttpPut("{productId}")]
+        [HttpPut("{productId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateProduct(int productId, Product productToSave)
@@ -70,7 +71,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, productToSave);
         }
 
-        [HttpDelete("{productId}")]
+        [HttpDelete("{productId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteProduct(int productId)

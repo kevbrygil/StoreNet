@@ -4,6 +4,7 @@ using StoreNet.Domain.Interfaces.Services;
 using StoreNet.Application.Sales;
 using StoreNet.Application.Sales.Dtos;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StoreNet.API.Controllers
 {
@@ -20,7 +21,7 @@ namespace StoreNet.API.Controllers
             this._mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<ActionResult<IReadOnlyList<Sale>>> GetSales()
         {
             var salesDetailsList = await _saleService.GetAll();
@@ -32,7 +33,7 @@ namespace StoreNet.API.Controllers
             return Ok(salesDetailsList);
         }
 
-        [HttpGet("{saleId}")]
+        [HttpGet("{saleId}"), Authorize]
         public async Task<ActionResult<Sale>> GetSaleById(int saleId)
         {
             var response = await _saleService.GetById(saleId);
@@ -44,7 +45,7 @@ namespace StoreNet.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost()]
+        [HttpPost(), Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateSale(SaleAddDto saleToSave)
@@ -66,7 +67,7 @@ namespace StoreNet.API.Controllers
 
         }
 
-        [HttpPut("{saleId}")]
+        [HttpPut("{saleId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateSale(int saleId, Sale saleToSave)
@@ -86,7 +87,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, saleToSave);
         }
 
-        [HttpDelete("{saleId}")]
+        [HttpDelete("{saleId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteStore(int saleId)

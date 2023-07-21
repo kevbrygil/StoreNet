@@ -9,4 +9,6 @@ public partial class Customer : BaseEntity<int>
     public string Address { get; set; } = null!;
 
     public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
+
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

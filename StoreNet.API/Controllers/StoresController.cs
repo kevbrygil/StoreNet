@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoreNet.Domain.Entities;
 using StoreNet.Domain.Interfaces.Services;
 
@@ -15,7 +16,7 @@ namespace StoreNet.API.Controllers
             this._storeService = storeService;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<ActionResult<IReadOnlyList<Store>>> GetStores()
         {
             var storesDetailsList = await _storeService.GetAll();
@@ -27,7 +28,7 @@ namespace StoreNet.API.Controllers
             return Ok(storesDetailsList);
         }
 
-        [HttpGet("{storeId}")]
+        [HttpGet("{storeId}"), Authorize]
         public async Task<ActionResult<Store>> GetStoreById(int storeId)
         {
             var response = await _storeService.GetById(storeId);
@@ -39,7 +40,7 @@ namespace StoreNet.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost()]
+        [HttpPost(), Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateStore(Store storeToSave)
@@ -54,7 +55,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, storeToSave);
         }
 
-        [HttpPut("{storeId}")]
+        [HttpPut("{storeId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateStore(int storeId, Store storeToSave)
@@ -74,7 +75,7 @@ namespace StoreNet.API.Controllers
             return CreatedAtRoute(null, storeToSave);
         }
 
-        [HttpDelete("{storeId}")]
+        [HttpDelete("{storeId}"), Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteStore(int storeId)

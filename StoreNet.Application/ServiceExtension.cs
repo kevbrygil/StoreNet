@@ -2,12 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StoreNet.Domain.Interfaces;
+using StoreNet.Domain.Interfaces.Repositories;
 using StoreNet.Domain.Interfaces.Services;
-using StoreNet.Service;
 using StoreNet.Infrastructure;
-using AutoMapper;
-using StoreNet.Application.Sales.MappersProfile;
-using System.Reflection;
+using StoreNet.Infrastructure.Extensions.Users;
+using StoreNet.Service;
 
 namespace StoreNet.Application
 {
@@ -23,11 +22,14 @@ namespace StoreNet.Application
             services.AddScoped<Func<StoreNetContext>>((provider) => () => provider.GetService<StoreNetContext>());
             services.AddScoped<DbFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IStoreService, StoreService>();
             services.AddScoped<ISaleService, SaleService>();
             services.AddScoped<IProductStoreService, ProductStoreService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
