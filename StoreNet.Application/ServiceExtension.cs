@@ -15,9 +15,10 @@ namespace StoreNet.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<StoreNetContext>(options =>
+            services.AddDbContextPool<StoreNetContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("StoreNetDB"));
+                options.UseNpgsql(configuration.GetConnectionString("StoreNetDB"));
+
             });
 
             services.AddScoped<Func<StoreNetContext>>((provider) => () => provider.GetService<StoreNetContext>());
