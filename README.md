@@ -6,6 +6,10 @@ Este README describe el proyecto, asi como la puesta en marcha de la aplicación
 
 Este repositorio fue hecho con la finalidad de ayudar en el proceso de evaluación para la vacante de desarrollador Full Stack Developer.
 
+# NOTA
+
+Esta implementacion fue basa en dos propuestas de trabajo, por lo que uno fue hecho por SQL Server(contenido en la rama ProductionSqlServer) y otro por PostgreSQL(contenido en main y ProductionPostgreSql), cabe destacar que se realizó la migracion de sql server a postgresql, junto con los scripts y configuraciones necesarias para su correcto funcionamiento. Por lo que el proyecto puede estar distinto al propuesto, ya que por tiempo en el desarrollo de los dos, se tuvo que realizar uno base.
+
 ### Diseño y arquitectura.
 
 Para este proyecto se baso en los requerimientos de la evaluación, tomando en cuenta la arquitectura en 3 capaz:
@@ -41,14 +45,26 @@ En cuestión de la data se aplicó el enfoque Database First, en la cual la base
 
 **Entity Framework Core**: Se hizo uso de esta librería para un ORM en la aplicación.
 
-**SQL Server**: Lo incluimos como base de datos para desarrollo de las API´s, Sql Sever nos permite consultar datos mediante SQL, por lo que se adapta al desarrollo backend para este proyecto en particular.
+**PostgreSQL**: Lo incluimos como base de datos para desarrollo de las API´s, PostgreSQL nos permite consultar datos con una reputación de su velocidad, fiabilidad, compatibilidad, por lo que se adapta al desarrollo backend para este proyecto en particular.
 
 **AutoMapper**: Es una herramienta muy util que nos resuelve el mapeo de las nuestras entidades del proyecto.
 
 ### Requisitos para backend
 
 ** .NET SDK  7 **
-** SQL Server 2022 **
+** PostgreSQL 17.3 **
+
+### Deploy Backend
+
+En nuestro servidor podemos realizar el deploy en base a Docker con Docker Compose, usando el (dockerfile, docker-compose, etc) alojado en StoreNet.API, debe ejecutar el siguiente comando estando en la ruta comentada:
+
+```
+docker-compose up -d
+//Ver contenedores
+docker ps
+//Ver logs
+docker logs [id-contenedor]
+```
 
 ### Requisitos para frontend
 
@@ -56,6 +72,36 @@ En cuestión de la data se aplicó el enfoque Database First, en la cual la base
 
 **NPM**: Se probó con la versión 8.6.0
 
+### Deploy Frontend
+Podemos compilar con el siguiente script(debe tener en cuenta la configuracion de la ruta de la api en los environments files):
+
+```
+npm run build
+```
+
+De ahi podemos configurar nuestro servidor con el servicio de Nginx, parecido a esta configuracion:
+
+server {
+    listen 80;
+    server_name netstore.com www.netstore.com;
+
+    # Define the root directory for your static files
+    root /var/www/mysitenetstore/static;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    access_log /var/log/nginx/netstore.com.access.log;
+    error_log /var/log/nginx/netstore.com.error.log;
+
+}
+
+### Deploy Recomendado en ambos (back y front)
+
+Se puede usar Azure con la integración continua (CI/CD) en base a los pipelines, por lo que nos garantiza la acelaración del desarrollo y tener el codigo siempre disponible en nuestros entornos.
+
+<img src="./public/azure.png" width="600">
 
 ### Instalación
 
@@ -65,9 +111,9 @@ En cuestión de la data se aplicó el enfoque Database First, en la cual la base
 git clone https://github.com/kevbrygil/StoreNet.git
 ```
 
-2.- Dirijase a la carpeta Ejecute el script SQL en su entorno SQL Server (Esto creará la bas de datos y datos de prueba).
+2.- Dirijase a la carpeta StoreNet.Infrastructure/Data/StoreNet.Database.sql.
 
-3.- Dirijase a la carpeta StoreNet.Infrastructure/Data e instale el script StoreNet.Database.sql (Esto creará la base de datos y data de prueba).
+3.- Ejecute el script SQL en su entorno PostgreSQL (Esto creará la base de datos y datos de prueba).
 
 4.- Dirijase a la carpeta StoreNet.Frontend e instale las librerias necesarias para la aplicacion web.
 
@@ -104,6 +150,12 @@ export const environment = {
 ```
 cd StoreNet.Frontend
 ng serve -o
+```
+ó tambien:
+
+```
+cd StoreNet.Frontend
+npm run start
 ```
 
 9.- Acceder al sitio localmente
