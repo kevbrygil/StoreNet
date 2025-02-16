@@ -8,7 +8,7 @@ Este repositorio fue hecho con la finalidad de ayudar en el proceso de evaluaci�
 
 # NOTA
 
-Esta implementacion fue basa en dos propuestas de trabajo, por lo que uno fue hecho por SQL Server(contenido en la rama ProductionSqlServer) y otro por PostgreSQL(contenido en main y ProductionPostgreSql), cabe destacar que se realizó la migracion de sql server a postgresql, junto con los scripts y configuraciones necesarias para su correcto funcionamiento. Por lo que el proyecto puede estar distinto al propuesto, ya que por tiempo en el desarrollo de los dos, se tuvo que realizar uno base.
+Esta implementacion fue basada en dos propuestas de trabajo, por lo que uno fue hecho por SQL Server(contenido en la rama ProductionSqlServer) y otro por PostgreSQL(contenido en main y ProductionPostgreSql), cabe destacar que se realizó la migracion de sql server a postgresql, junto con los scripts y configuraciones necesarias para su correcto funcionamiento. Por lo que el proyecto puede estar distinto al propuesto, ya que por tiempo en el desarrollo de los dos, se tuvo que realizar uno base.
 
 ### Diseño y arquitectura.
 
@@ -101,7 +101,7 @@ server {
 
 Se puede usar Azure con la integración continua (CI/CD) en base a los pipelines, por lo que nos garantiza la acelaración del desarrollo y tener el codigo siempre disponible en nuestros entornos.
 
-<img src="./public/azure.png" width="600">
+<img src="./public/azure.png" width="800">
 
 ### Instalación
 
